@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Environment Extension</h1>
+
+<p>Select App and Envs Below.</p>
+
+<form action="/awsenvspost" method="POST">
+  <label for="awsapps">Choose an app:</label>
+  <select name="apps" id="apps">
+    <option value="mpro">mpro</option>
+    <option value="payments">payments</option>
+    <option value="dolphin">dolphin</option>
+    <option value="agrim">agrim</option>
+  </select>
+  <br><br>
+
+  <label for="envs">Choose a environment:</label>
+  <select name="envs" id="envs">
+    <option value="dev">dev</option>
+    <option value="uat">uat</option>
+    <option value="prod">prod</option>
+    <option value="sit">sit</option>
+    <option value="qa">qa</option>
+  </select>
+
+
+  <input type="submit" value="Submit">
+</form>
+
+<p>Click the "Submit" button and the form-data will be sent to a page on the 
+server called "/awsenvspost".</p>
+
+</body>
+</html>
