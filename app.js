@@ -34,6 +34,7 @@ app.post('/product', (req,res)=>{
     res.send('<h1>Hi the data has been saved</h1>');
 });
 //-----------AWS SQS AND LAMBDA INTEGRATION---------
+//------------Saurav1509@users.noreply.github.com---------------
 app.get('/awsenvs', (req,res) =>{
     res.sendFile(path.join(__dirname,'static','aws_env.html'));
 });
@@ -45,17 +46,28 @@ app.post('/awsenvspost', (req,res)=>{
     var awsenv = req.body.apps + req.body.envs;
     console.log(awsenv);
 
-    sqs.sendMessage(params, function(err, data) {
+    if (req.body.envs == "dev") {
+      sqs.sendMessage(params2, function(err, data) {
         if (err) {
           console.log("Error", err);
         } else {
           console.log("Success", data.MessageId);
         }
       });
+    }
+    else{
+      sqs.sendMessage(params1, function(err, data) {
+          if (err) {
+            console.log("Error", err);
+          } else {
+            console.log("Success", data.MessageId);
+          }
+        });
+      }
 
 });
 
-var params = {
+var params1 = {
    DelaySeconds: 10,
    MessageAttributes: {
      "Title": {
@@ -75,6 +87,24 @@ var params = {
    QueueUrl: "https://sqs.ap-south-1.amazonaws.com/762680578686/testqueue"
  };
 
-
+ var params2 = {
+  DelaySeconds: 10,
+  MessageAttributes: {
+    "Title": {
+      DataType: "String",
+      StringValue: "AWS ENVS - 2"
+    },
+    "Author": {
+      DataType: "String",
+      StringValue: "Saurav-2"
+    },
+    "WeeksOn": {
+      DataType: "Number",
+      StringValue: "6"
+    }
+  },
+  MessageBody: "this is a sqs test-2 message",
+  QueueUrl: "https://sqs.ap-south-1.amazonaws.com/762680578686/testqueue2"
+};
 
 app.listen(3000);
